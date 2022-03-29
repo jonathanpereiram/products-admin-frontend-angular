@@ -7,7 +7,6 @@ import { MainComponent } from './pages/main/main.component';
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent,
     children: [
       {
         path: 'login',
