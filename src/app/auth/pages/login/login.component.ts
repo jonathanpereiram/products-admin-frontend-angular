@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { isInvalidEmailValidator } from '../../../shared/validators/input-validator';
 
 @Component({
   selector: 'app-login',
@@ -46,6 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit(){
+    console.log(this.loginForm.controls['email'].errors);
     console.log('request');
     this.authService.login().subscribe(auth => {
       console.log(auth)
