@@ -28,6 +28,9 @@
 
         <div class="form-group">
             <input type="password" class="form-control" placeholder="Confirmar Contraseña" formControlName="confirmPassword">
+            <div *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)">
+                <div class="error-text" *ngIf="confirmPassword?.errors?.['required']">* La confirmacion de contraseña es obligatoria</div>
+            </div>
             <div *ngIf="registerForm?.invalid && (registerForm?.dirty || registerForm?.touched)">
                 <div class="error-text" *ngIf="registerForm?.errors?.['isNotEqualsPassword']">* Las contraseñas no coinciden</div>
             </div>
@@ -40,5 +43,3 @@
     </form>
     <p class="text-center">Volver a <a routerLink="/auth/login">Iniciar Sesion</a></p>
 </div>
-
-{{registerForm?.errors | json}}

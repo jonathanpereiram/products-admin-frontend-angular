@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { confirmPassword, isInvalidEmailValidator } from '../../../shared/validators/input-validator';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -39,14 +40,17 @@ export class RegisterComponent implements OnInit {
     name: ['', Validators.required],
     email: ['', [Validators.required, isInvalidEmailValidator]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['']
+    confirmPassword: ['', [Validators.required]]
     }, 
     {
       validators: confirmPassword
     }
   )
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) { }
 
   get name() {
     return this.registerForm.get('name')
@@ -68,7 +72,21 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(){
+    if(!this.registerForm.touched){
+      this.registerForm.markAllAsTouched(); 
+    }
 
+    if(this.registerForm.invalid){
+      return;
+    }
+
+    const name = this.registerForm.get('name')?.value;
+    const email = this.registerForm.get('email')?.value;
+    const password = this.registerForm.get('password')?.value;
+
+    this.authService.register(name, email, password).subscribe(res => {
+      console.log(res);
+    })
   }
 
 }
