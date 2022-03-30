@@ -41,11 +41,27 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder) { }
 
+  get name() {
+    return this.registerForm.get('name')
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get confirmPassword() {
+    return this.registerForm.get('confirmPassword');
+  }
+
   ngOnInit(): void {
   }
 
   submit(){
-
+    
   }
 
 }
