@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { isInvalidEmailValidator } from '../../../shared/validators/input-validator';
+import { confirmPassword, isInvalidEmailValidator } from '../../../shared/validators/input-validator';
 
 @Component({
   selector: 'app-register',
@@ -28,16 +28,23 @@ import { isInvalidEmailValidator } from '../../../shared/validators/input-valida
         font-size: 15px;
         font-weight: bold;
     }
+    .error-text {
+      color: red
+    }
   `]
 })
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    email: ['', isInvalidEmailValidator],
-    password: [],
-    confirmPassword: []
-  })
+    email: ['', [Validators.required, isInvalidEmailValidator]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['']
+    }, 
+    {
+      validators: confirmPassword
+    }
+  )
 
   constructor(private fb: FormBuilder) { }
 
@@ -61,7 +68,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(){
-    
+
   }
 
 }
