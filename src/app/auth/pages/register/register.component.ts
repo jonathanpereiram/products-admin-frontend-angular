@@ -37,15 +37,17 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup = this.fb.group({
-    name: ['', Validators.required],
-    email: ['', [Validators.required, isInvalidEmailValidator]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['', [Validators.required]]
+    name: ['john pereira', Validators.required],
+    email: ['jpereira@gmail.com', [Validators.required, isInvalidEmailValidator]],
+    password: ['123123', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['123123', [Validators.required]]
     }, 
     {
       validators: confirmPassword
     }
   )
+
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -80,12 +82,15 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
+
     const name = this.registerForm.get('name')?.value;
     const email = this.registerForm.get('email')?.value;
     const password = this.registerForm.get('password')?.value;
 
     this.authService.register(name, email, password).subscribe(res => {
       console.log(res);
+      this.loading = false;
     })
   }
 

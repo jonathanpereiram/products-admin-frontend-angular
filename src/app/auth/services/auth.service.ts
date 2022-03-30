@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -19,6 +19,12 @@ export class AuthService {
 
   register(name: string = '', email: string = '', password: string = ''): Observable<any> {
     const url: string = `${this._targetURL}/api/auth/register`;
-    return this.http.post(url, { name, email, password});
+    return this.http.post(url, { name, email, password})
+      .pipe(
+        catchError(err => of({
+          ok: false,
+          msg: err.error.errors[0].msg
+        }))
+      );
   }
 }
