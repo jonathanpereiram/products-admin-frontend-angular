@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { isInvalidEmailValidator } from '../../../shared/validators/input-validator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -34,23 +34,42 @@ import { isInvalidEmailValidator } from '../../../shared/validators/input-valida
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = this.fb.group({
-    email:    ['', [Validators.required]],
-    password: ['', [Validators.required]]
+    email:    ['jpereira@gmail.com', [Validators.required]],
+    password: ['123123', [Validators.required]]
   });
+
+  loading: boolean = false
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
   }
 
   submit(){
-    console.log(this.loginForm.controls['email'].errors);
-    console.log('request');
-    this.authService.login().subscribe(auth => {
+    if(!this.loginForm.touched){
+      this.loginForm.markAllAsTouched();
+    }
+
+    if(this.loginForm.invalid){
+      return;
+    }
+
+    this.loading = true;
+
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    this.authService.login(email, password).subscribe(auth => {
       console.log(auth)
+      if(!auth.ok){
+        this.loading = false;
+      } else {
+        this.router.navigateByUrl('users');
+      }
     })
   }
 
