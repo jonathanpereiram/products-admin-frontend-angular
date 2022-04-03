@@ -3,8 +3,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styles: [
-  ]
+  styles: [`
+    nav {
+      margin-top: 10px;
+    }
+  `]
 })
 export class ListComponent implements OnInit {
 
