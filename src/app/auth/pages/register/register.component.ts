@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { confirmPassword, isInvalidEmailValidator } from '../../../shared/validators/input-validator';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  registerForm: FormGroup = this.fb.group({
+  registerForm: FormGroup = this._fb.group({
     name: ['john pereira', Validators.required],
     email: ['jpereira@gmail.com', [Validators.required, isInvalidEmailValidator]],
     password: ['123123', [Validators.required, Validators.minLength(6)]],
@@ -50,8 +51,9 @@ export class RegisterComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
-    private authService: AuthService
+    private _fb: FormBuilder,
+    private _authService: AuthService,
+    private _router: Router
   ) { }
 
   get name() {
@@ -88,9 +90,10 @@ export class RegisterComponent implements OnInit {
     const email = this.registerForm.get('email')?.value;
     const password = this.registerForm.get('password')?.value;
 
-    this.authService.register(name, email, password).subscribe(res => {
-      console.log(res);
-      this.loading = false;
+    this._authService.register(name, email, password)
+      .subscribe(res => {
+        this.loading = false;
+        this._router.navigateByUrl('users');
     })
   }
 

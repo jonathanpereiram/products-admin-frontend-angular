@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, Observable, of, switchMap, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Auth } from '../auth/interfaces/auth.interface';
 
@@ -56,7 +56,11 @@ export class AuthService {
       );
   }
 
-  verifyAuthentication(): Observable<boolean> {
+  logout(): void {
+    localStorage.removeItem('token');
+  }
+
+  isLogin(): Observable<boolean> {
     
     const token = localStorage.getItem('token');
     

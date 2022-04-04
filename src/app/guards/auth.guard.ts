@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-      return this._authService.verifyAuthentication()
+      return this._authService.isLogin()
         .pipe(
           tap(auth => {
             if(!auth){
@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
-      return this._authService.verifyAuthentication()
+      return this._authService.isLogin()
       .pipe(
         tap(auth => {
           if(!auth){
