@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
     const password = this.loginForm.get('password')?.value;
 
     this.authService.login(email, password).subscribe(auth => {
-      console.log(auth)
       if(!auth.ok){
         this.loading = false;
       } else {

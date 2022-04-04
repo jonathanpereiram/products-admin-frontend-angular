@@ -4,7 +4,7 @@
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
 
       <li *forInRange="numbersOfPagination; let i = index" class="page-item">
-        <a class="page-link" href="#">{{i}}</a>
+        <a class="page-link" [routerLink]="['./users']" [queryParams]="{page: i}">{{i}}</a>
       </li>
 
       <li class="page-item"><a class="page-link" href="#">Next</a></li>

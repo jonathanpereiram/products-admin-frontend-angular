@@ -8,9 +8,8 @@ import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
-  
     ListComponent,
-       MainComponent
+    MainComponent
   ],
   imports: [
     CommonModule,

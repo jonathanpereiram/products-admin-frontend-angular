@@ -24,22 +24,35 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe(params => {
-      let { page = 0} = params;
+      
+      let { page = 0 } = params;
+
+      const a = parseInt(page)
+
+      console.log('=>',a)
+
+      if(a === NaN){
+        return;
+      }
 
       page = page - 1;
 
       if(page < 0){
         page = 0;
       }
-
+      
       const limit = 3;
- 
+
+      if(page != 0){
+        page = page * limit;
+      }
+      
       this._userService.getAllUsers(page, limit)
-      .subscribe(users => {
-        this.numbersOfPagination = users.data.countDocuments / limit;
-        console.log('numbersOfPagination:', this.numbersOfPagination)
-        this.users = users.data.items;
-      })
+        .subscribe(users => {
+          this.numbersOfPagination = users.data.countDocuments / limit;
+        
+          this.users = users.data.items;
+      });
     })
     
   }
