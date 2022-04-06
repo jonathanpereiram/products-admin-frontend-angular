@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../interfaces/user.interface';
+import { UserTable } from '../../interfaces/table.interface';
 
 @Component({
   selector: 'app-list',
@@ -16,26 +17,33 @@ import { User } from '../../interfaces/user.interface';
 
 export class ListComponent implements OnInit {
 
-  users: {name: string, email: string}[] = [];
   tableHeaders: string[] = ['name', 'email'];
+
+  users: UserTable[] = [];
+
   numbersOfPagination: number = 0;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
-    private _userService: UserService
+    private _userService: UserService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe(params => {
       
-      let { page = 0 } = params;
+      let { page = '0' } = params;
 
-      const a = parseInt(page)
+      if(!page){
+        console.log('no viene page')
+        this._router.navigate(['users'], { queryParams: { page: '0', skip: '3'}});
+      }
 
-      console.log('=>',a)
+      const reg = new RegExp('^[0-9]+$');
 
-      if(a === NaN){
-        return;
+      if(reg.test(page)){
+        console.log('regex fallo')
+        this._router.navigate(['users'], { queryParams: { page: '0', skip: '3'}});
       }
 
       page = page - 1;
@@ -54,7 +62,8 @@ export class ListComponent implements OnInit {
         .subscribe(users => {
           this.numbersOfPagination = users.data.countDocuments / limit;
         
-          this.users = users.data.items.map(usr => ({name: usr.name, email: usr.email}));
+          this.users = users.data.items
+            .map<UserTable>(usr => ({name: usr.name, email: usr.email}));
       });
     })
     
