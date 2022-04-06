@@ -34,16 +34,20 @@ export class ListComponent implements OnInit {
       
       let { page = '0' } = params;
 
+      console.log(page)
+
       if(!page){
         console.log('no viene page')
-        this._router.navigate(['users'], { queryParams: { page: '0', skip: '3'}});
+        this._router.navigate(['users'], { queryParams: { page: '0' }});
+        return;
       }
 
       const reg = new RegExp('^[0-9]+$');
 
-      if(reg.test(page)){
+      if(!reg.test(page)){
         console.log('regex fallo')
-        this._router.navigate(['users'], { queryParams: { page: '0', skip: '3'}});
+        this._router.navigate(['users'], { queryParams: { page: '0' }});
+        return;
       }
 
       page = page - 1;
