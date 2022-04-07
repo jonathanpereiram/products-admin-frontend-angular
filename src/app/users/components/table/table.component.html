@@ -1,12 +1,22 @@
 <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col" *ngFor="let header of tableHeaders">{{ header }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of tableData">
-        <td *ngFor="let header of tableHeaders">{{data[header]}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of tableData">
+      <td>{{data.name}}</td>
+      <td>{{data.email}}</td>
+      <td>
+        <i class="bi bi-eye"></i>
+        /
+        <i class="bi bi-pencil"(click)="updateUser(data.uid)"></i>
+        /
+        <i class="bi bi-trash" (click)="deleteUser(data.uid)"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>

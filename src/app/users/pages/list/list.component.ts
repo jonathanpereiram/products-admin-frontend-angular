@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../interfaces/user.interface';
-import { UserTable } from '../../interfaces/table.interface';
 
 @Component({
   selector: 'app-list',
@@ -17,9 +16,7 @@ import { UserTable } from '../../interfaces/table.interface';
 
 export class ListComponent implements OnInit {
 
-  tableHeaders: string[] = ['name', 'email'];
-
-  users: UserTable[] = [];
+  users: User[] = [];
 
   numbersOfPagination: number = 0;
 
@@ -34,40 +31,37 @@ export class ListComponent implements OnInit {
       
       let { page = '0' } = params;
 
-      console.log(page)
-
       if(!page){
-        console.log('no viene page')
         this._router.navigate(['users'], { queryParams: { page: '0' }});
         return;
       }
 
-      const reg = new RegExp('^[0-9]+$');
+      const regex = new RegExp('^[0-9]+$');
 
-      if(!reg.test(page)){
-        console.log('regex fallo')
+      if(!regex.test(page)){
         this._router.navigate(['users'], { queryParams: { page: '0' }});
         return;
       }
 
-      page = page - 1;
+      let pageNumber = parseInt(page);
 
-      if(page < 0){
-        page = 0;
+      pageNumber = pageNumber - 1;
+
+      if(pageNumber < 0){
+        pageNumber = 0;
       }
       
-      const limit = 3;
+      const limit = 5;
 
-      if(page != 0){
-        page = page * limit;
+      if(pageNumber != 0){
+        pageNumber = pageNumber * limit;
       }
       
-      this._userService.getAllUsers(page, limit)
+      this._userService.getAllUsers(pageNumber, limit)
         .subscribe(users => {
-          this.numbersOfPagination = users.data.countDocuments / limit;
-        
-          this.users = users.data.items
-            .map<UserTable>(usr => ({name: usr.name, email: usr.email}));
+          this.numbersOfPagination = Math.ceil(users.data.countDocuments / limit);
+
+          this.users = users.data.items;
       });
     })
     

@@ -3,16 +3,20 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styles: [
-  ]
+  styles: [`
+    i {
+      cursor: pointer;
+    }
+  `]
 })
 export class TableComponent implements OnInit {
 
   private _tableData: any[] = [];
 
-  @Input() tableHeaders: string[] = [];
+  public tableHeaders: string[] = ['name', 'email', 'action'];
+  
   @Input() 
-  get tableData(): any[] { return this._tableData }
+  get tableData(): any[] { return this._tableData; }
   set tableData(value: any[]) {
     this._tableData = value;
   }
@@ -20,6 +24,14 @@ export class TableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  deleteUser(uid: string = ''): void {
+    console.log(uid)
+  }
+
+  updateUser(uid: string = ''): void {
+    console.log(uid)
   }
 
 }
