@@ -30,8 +30,4 @@ export class TableComponent implements OnInit {
     console.log(uid)
   }
 
-  updateUser(uid: string = ''): void {
-    console.log(uid)
-  }
-
 }
