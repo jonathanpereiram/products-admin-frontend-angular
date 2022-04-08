@@ -18,7 +18,7 @@ export class AutenticatedGuard implements CanActivate, CanLoad {
       .pipe(
         map(auth => {
           if(auth){
-            this._router.navigateByUrl('/users');
+            this._router.navigateByUrl('/products');
             return false;
           } else {
             return true;
@@ -31,7 +31,7 @@ export class AutenticatedGuard implements CanActivate, CanLoad {
       .pipe(
         map(auth => {
           if(auth){
-            this._router.navigateByUrl('/users');
+            this._router.navigateByUrl('/products');
             return false;
           } else {
             return true;

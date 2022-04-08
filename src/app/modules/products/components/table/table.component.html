@@ -1,0 +1,22 @@
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of data">
+        <td>{{data.name}}</td>
+        <td>{{data.price}}</td>
+        <td>{{data.stock}}</td>
+        <td>
+          <i class="bi bi-eye"></i>
+          /
+          <i class="bi bi-trash" (click)="deleteUser(data.uid)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
