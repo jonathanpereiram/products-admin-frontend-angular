@@ -26,13 +26,13 @@ export class ListComponent implements OnInit {
 
   ngOnInit(): void {
     this._activatedRoute.queryParams.subscribe(params => {
-      
+
       const { page = '1' } = params;
 
       const regex = new RegExp('^[0-9]+$');
 
       if(!page || !regex.test(page)){
-        this._router.navigate(['users'], { queryParams: { page: '1' }});
+        this._router.navigate(['products'], { queryParams: { page: '1' }});
         return;
       }
 
@@ -52,6 +52,7 @@ export class ListComponent implements OnInit {
       
       this._productService.getProducts(pageNumber, limit)
         .subscribe(products => {
+
           this.numbersOfPagination = Math.ceil(products.data.countDocuments / limit);
 
           this.products = products.data.items;
