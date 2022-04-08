@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 import { ProductRoot } from '../modules/products/interfaces/product.interface';
@@ -14,7 +14,7 @@ export class ProductService {
 
   constructor(private _http: HttpClient) { }
 
-  getProducts(page: number = 0, limit = 0){
+  getProducts(page: number = 0, limit = 0): Observable<ProductRoot>{
     const url = `${this._targetURL}/api/products`;
 
     const params: HttpParams = new HttpParams()
@@ -23,5 +23,9 @@ export class ProductService {
       .set('fields', 'name,price');
 
     return this._http.get<ProductRoot>(url, { params });
+  }
+
+  getProductById(uid: string = ''): Observable<ProductRoot>{
+
   }
 }

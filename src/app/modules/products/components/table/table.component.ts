@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -19,12 +20,16 @@ export class TableComponent implements OnInit {
     this._data = value;
   }
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
   }
 
   deleteProduct(uid: string = ''): void {
-    console.log(uid)
+    this._router.navigate(['products', uid])
+  }
+
+  showProduct(uid: string = ''): void {
+    this._router.navigate(['products', uid])
   }
 }

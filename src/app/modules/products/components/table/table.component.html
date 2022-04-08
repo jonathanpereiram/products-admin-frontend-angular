@@ -11,7 +11,7 @@
         <td>{{data.name}}</td>
         <td>{{data.price}}</td>
         <td>
-          <i class="bi bi-eye"></i>
+          <i class="bi bi-eye" (click)="showProduct(data.uid)"></i>
           /
           <i class="bi bi-trash" (click)="deleteProduct(data.uid)"></i>
         </td>

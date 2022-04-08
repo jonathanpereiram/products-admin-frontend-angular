@@ -1,3 +1,13 @@
-<div class="container">
-    <p>show-update works!</p>
+<div class="global-form">
+    <form [formGroup]="productForm">
+        <h2 class="text-center">Product</h2>
+        
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Nombre" formControlName="name">
+            <div *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+                <div class="error-text" *ngIf="name?.errors?.['required']">* El nombre es obligatorio</div>
+            </div>
+        </div>
+
+    </form>
 </div>

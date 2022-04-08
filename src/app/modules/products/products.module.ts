@@ -7,6 +7,7 @@ import { MainComponent } from './pages/main/main.component';
 import { SharedModule } from '../shared/shared.module';
 import { TableComponent } from './components/table/table.component';
 import { ShowUpdateComponent } from './pages/show-update/show-update.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ShowUpdateComponent } from './pages/show-update/show-update.component';
   imports: [
     CommonModule,
     ProductsRoutingModule,
+    ReactiveFormsModule,
     SharedModule
   ]
 })

@@ -11,7 +11,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       { path: '', component: ListComponent },
-      { path: ':id', component: ShowUpdateComponent },
+      { path: ':uid', component: ShowUpdateComponent },
       { path: '**', redirectTo: '' }
     ]
   }
