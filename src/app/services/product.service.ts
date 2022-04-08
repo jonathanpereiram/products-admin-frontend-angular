@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -16,6 +16,12 @@ export class ProductService {
 
   getProducts(page: number = 0, limit = 0){
     const url = `${this._targetURL}/api/products`;
-    return this._http.get<ProductRoot>(url);
+
+    const params: HttpParams = new HttpParams()
+      .set('page', page)
+      .set('limit', limit)
+      .set('fields', 'name,price');
+
+    return this._http.get<ProductRoot>(url, { params });
   }
 }

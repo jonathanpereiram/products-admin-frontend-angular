@@ -52,6 +52,7 @@ export class ListComponent implements OnInit {
       
       this._productService.getProducts(pageNumber, limit)
         .subscribe(products => {
+          console.log(products)
           this.numbersOfPagination = Math.ceil(products.data.countDocuments / limit);
 
           this.products = products.data.items;

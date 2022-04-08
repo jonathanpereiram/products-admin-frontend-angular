@@ -3,14 +3,15 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styles: [
-  ]
+  styles: [`
+    i {
+      cursor: pointer;
+    }
+  `]
 })
 export class TableComponent implements OnInit {
 
   private _data: any[] = [];
-
-  public tableHeaders: string[] = ['name', 'email', 'action'];
   
   @Input() 
   get data(): any[] { return this._data; }
@@ -23,7 +24,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  deleteUser(uid: string = ''): void {
+  deleteProduct(uid: string = ''): void {
     console.log(uid)
   }
 }
