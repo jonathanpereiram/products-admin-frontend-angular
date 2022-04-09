@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../../services/product.service';
 import { CategoryService } from '../../../../services/category.service';
@@ -14,7 +14,7 @@ import { Category } from '../../../categories/interfaces/category.interface';
     }
   `]
 })
-export class ShowUpdateComponent implements OnInit, AfterViewInit {
+export class ShowUpdateComponent implements OnInit {
 
   productForm: FormGroup = this._fb.group({
     name: [{value: '', disabled: true } , Validators.required],
@@ -29,8 +29,6 @@ export class ShowUpdateComponent implements OnInit, AfterViewInit {
   isPencilHover: boolean = false;
   isDataLoaded: boolean = false;
   isFormDisabled: boolean = true;
-
-  @ViewChild('updateButton') updateButton!: ElementRef<HTMLButtonElement>;
 
   constructor(
     private _activatedRoute: ActivatedRoute,
@@ -84,14 +82,6 @@ export class ShowUpdateComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.updateButton.nativeElement.disabled = true;
-  }
-
-  select(uid: any){
-    console.log(uid)
-  } 
-
   changeMode(){
     if(this.isFormDisabled){
       this.name?.enable();
@@ -99,16 +89,18 @@ export class ShowUpdateComponent implements OnInit, AfterViewInit {
       this.stock?.enable();
       this.active?.enable();
       this.category?.enable();
-      this.updateButton.nativeElement.disabled = false;
     } else {
       this.name?.disable();
       this.price?.disable();
       this.stock?.disable();
       this.active?.disable();
       this.category?.disable();
-      this.updateButton.nativeElement.disabled = true;
     }
     this.isFormDisabled = !this.isFormDisabled;
+  }
+
+  updateProduct(){
+    console.log(this.category?.value)
   }
 
 }
